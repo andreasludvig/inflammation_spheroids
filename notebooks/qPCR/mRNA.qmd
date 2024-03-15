@@ -669,7 +669,7 @@ ggplot() +
              shape = 21,
              alpha = 0.7,
              size = 5,
-             stroke = 1
+             stroke = 1, position = position_dodge(width = .25)
              ) +
   scale_fill_brewer(palette = "Set2", labels = c("1", "2", "3")) +
   geom_point(data = cyp_overall_means,
