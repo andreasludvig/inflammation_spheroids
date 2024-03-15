@@ -200,6 +200,7 @@ div.csl-indent {
   <li><a href="#effect-of-inflammatory-cytokines-on-mrna-expression" id="toc-effect-of-inflammatory-cytokines-on-mrna-expression" class="nav-link" data-scroll-target="#effect-of-inflammatory-cytokines-on-mrna-expression">Effect of inflammatory cytokines on mRNA expression</a></li>
   <li><a href="#activity-1" id="toc-activity-1" class="nav-link" data-scroll-target="#activity-1">Activity</a></li>
   </ul></li>
+  <li><a href="#mrna-sequencing" id="toc-mrna-sequencing" class="nav-link" data-scroll-target="#mrna-sequencing">mRNA sequencing</a></li>
   <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion">Discussion</a>
   <ul class="collapse">
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations"><strong>Limitations</strong></a></li>
@@ -351,6 +352,12 @@ Figure&nbsp;5: Overall mean CYP3A4 activity relative to vehicle control after IL
 </div>
 </section>
 </section>
+<section id="mrna-sequencing" class="level2">
+<h2 class="anchored" data-anchor-id="mrna-sequencing">mRNA sequencing</h2>
+<p>We see that supraphysiological levels of IL-6 and IL-1β have a marked effect on the up- and downregulation of the expression of several genes. IL-6 at 10 ng/ml gives rise to an upregulation of ~500 genes, and a downregulation of ~400 genes, whereas IL-1B at the same concentration leads to an up and downregulation of ~650 and and ~550 genes respecitvely. Not surprinsingly, our gene set enrichment analysis revealed the most affected pathways to be related to inflammatory processes. We saw nearly no genes significantly up or downregulated at the lowest concentration of IL-6, which is in stark contrast to what is seen with IL-1B.</p>
+<p><a href="images/main_seq_IL6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="images/main_seq_IL6.png" class="img-fluid"></a></p>
+<p><a href="images/main_seq_IL1B.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7"><img src="images/main_seq_IL1B.png" class="img-fluid"></a></p>
+</section>
 <section id="discussion" class="level2">
 <h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
 <p>5 linjers summary</p>
@@ -431,7 +438,7 @@ Figure&nbsp;5: Overall mean CYP3A4 activity relative to vehicle control after IL
 <div id="fig-mrna-rest" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-mrna-rest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="notebooks/qPCR/output/mrna-rest.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figure&nbsp;6: Normalized expression, mean across all time points"><img src="notebooks/qPCR/output/mrna-rest.png" class="img-fluid figure-img"></a>
+<a href="notebooks/qPCR/output/mrna-rest.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Figure&nbsp;6: Normalized expression, mean across all time points"><img src="notebooks/qPCR/output/mrna-rest.png" class="img-fluid figure-img"></a>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mrna-rest-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;6: Normalized expression, mean across all time points
@@ -856,7 +863,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","selector":".lightbox","loop":false,"openEffect":"zoom","descPosition":"bottom"});
+<script>var lightboxQuarto = GLightbox({"selector":".lightbox","loop":false,"closeEffect":"zoom","descPosition":"bottom","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;
