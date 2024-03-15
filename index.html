@@ -201,7 +201,7 @@ div.csl-indent {
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="index-preview.html"><i class="bi bi-journal-code"></i>Article Notebook</a></li><li><a href="notebooks/qPCR/mRNA-preview.html"><i class="bi bi-journal-code"></i>mRNA</a></li><li><a href="notebooks/viability/Viability-preview.html"><i class="bi bi-journal-code"></i>Viability</a></li></ul></div></nav>
+<div class="quarto-alternate-notebooks"><h2>Notebooks</h2><ul><li><a href="notebooks/qPCR/mRNA-preview.html"><i class="bi bi-journal-code"></i>mRNA</a></li><li><a href="notebooks/viability/Viability-preview.html"><i class="bi bi-journal-code"></i>Viability</a></li></ul></div></nav>
 </div>
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
 </div>
@@ -302,23 +302,17 @@ Figure&nbsp;2: Morphology for donors one, two, and three. Photos from the same w
 </section>
 <section id="effect-of-inflammatory-cytokines-on-mrna-expression" class="level3">
 <h3 class="anchored" data-anchor-id="effect-of-inflammatory-cytokines-on-mrna-expression">Effect of inflammatory cytokines on mRNA expression</h3>
-<p>Employing the 3D model and more physiologically relevant concentrations of the pro-inflammatory cytokines IL-6 and IL-1β, we observed a dose-dependent downregulation of the transcription of the critical CYP3A4 enzyme, also at physiologically relevant concentrations, a notable finding that deviates from much of the existing literature (hører til I discussion, snarere end her?). Similar dose-dependent effects were seen with CYP1A2, 2B6, and 2D6 upon cytokine exposure, except for an unexpected upregulation of 2B6 after treatment with IL1-B.</p>
+<p>Employing the 3D model and more physiologically relevant concentrations of the pro-inflammatory cytokines IL-6 and IL-1β, we observed a dose-dependent downregulation of the transcription of the critical CYP3A4 enzyme <a href="#fig-mrna-3a4-main" class="quarto-xref">Figure&nbsp;3</a> , also at physiologically relevant concentrations, a notable finding that deviates from much of the existing literature (hører til I discussion, snarere end her?). Similar dose-dependent effects were seen with CYP1A2, 2B6, and 2D6 upon cytokine exposure, except for an unexpected upregulation of 2B6 after treatment with IL1-B.</p>
 <p>No negative effect of the treatments on viability or morphology was observed (rather the reverse, likely due to the excessive handling of the plates for viability/morphology). (Har også viability for treatments. Plottes og tilføjes supp.?)</p>
-<div class="quarto-embed-nb-cell">
-<div id="cell-fig-mRNA-CYP3A4-main" class="cell" data-fig-width="9.5" data-fig-height="6.5">
-<div class="cell-output cell-output-display">
-<div id="fig-mrna-cyp3a4-main" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-mrna-3a4-main" class="quarto-figure quarto-figure-center quarto-float anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mrna-cyp3a4-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<a href="index_files/figure-html/notebooks-qPCR-mRNA-fig-mrna-cyp3a4-main-output-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)"><img src="index_files/figure-html/notebooks-qPCR-mRNA-fig-mrna-cyp3a4-main-output-1.png" width="912" height="624" class="figure-img"></a>
+<div aria-describedby="fig-mrna-3a4-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="notebooks/qPCR/output/mrna_3A4_main.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figure&nbsp;3: Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)"><img src="notebooks/qPCR/output/mrna_3A4_main.png" class="img-fluid figure-img"></a>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mrna-cyp3a4-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mrna-3a4-main-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3: Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)
 </figcaption>
 </figure>
-</div>
-</div>
-</div>
 </div>
 </section>
 </section>
@@ -786,7 +780,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"selector":".lightbox","descPosition":"bottom","closeEffect":"zoom","loop":false,"openEffect":"zoom"});
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","loop":false,"closeEffect":"zoom","selector":".lightbox","openEffect":"zoom"});
 window.onload = () => {
   lightboxQuarto.on('slide_before_load', (data) => {
     const { slideIndex, slideNode, slideConfig, player, trigger } = data;

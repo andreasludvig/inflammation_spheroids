@@ -142,8 +142,7 @@ Plot. Updated below withot facet
 ```{r}
 #| label: fig-mRNA-CYP3A4-main
 #| fig-cap: "Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)"
-#| fig-width: 9.5
-#| fig-height: 6.5
+
 
 # Subset the data for each condition
 data_IL1B <- data_3A4[condition == "IL-1B"]
