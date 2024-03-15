@@ -4,10 +4,24 @@
 /.quarto/
 /_manuscript
 
-/agujournal2019.cls
+/vancouver.csl
 /trackchanges.sty
 .Rproj.user
 .Rhistory
 .Rdata
 .httr-oauth
 .DS_Store
+
+/notebooks/viability/data_raw/
+/notebooks/viability/data_processed/
+
+/notebooks/qPCR/data_raw/
+/notebooks/qPCR/data_cleaned/
+/notebooks/qPCR/data_processed/
+/notebooks/qPCR/old_qPCR_import/
+/notebooks/qPCR/data_final_for_plotting/
+
+/notebooks/LCMS/data_raw/
+/notebooks/LCMS/data_processed/
+
+/notebooks/seq/data_raw/

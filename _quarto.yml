@@ -1,5 +1,9 @@
 project:
   type: manuscript
+  render: 
+    - "*.qmd"
+    - "!notebooks/qPCR/old_qPCR_import/"
+    - "!notebooks/seq/GSEA.qmd"
 
 execute:
   freeze: auto
@@ -9,7 +13,9 @@ format:
     toc: true
     comments:
       hypothesis: true
-
-
-
-
+    code-links: repo
+  docx: 
+    reference-doc: custom-reference-doc.docx
+  #jats: default
+  #pdf: default
+  #typst: default
