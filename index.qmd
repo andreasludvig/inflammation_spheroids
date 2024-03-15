@@ -146,9 +146,15 @@ Employing the 3D model and more physiologically relevant concentrations of the p
 
 No negative effect of the treatments on viability or morphology was observed (rather the reverse, likely due to the excessive handling of the plates for viability/morphology). (Har også viability for treatments. Plottes og tilføjes supp.?)
 
-![Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)](notebooks/qPCR/output/mrna_3A4_main.png){#fig-mrna-3a4-main}
+![Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)](notebooks/qPCR/output/mrna_3A4_main.png){#fig-mrna-3a4-main width="2000"}
 
 ## References
 
 ::: {#refs}
 :::
+
+## Supplementary material 
+
+![Normalized expression, mean across all time points](notebooks/qPCR/output/mrna-rest.png){#fig-mrna-rest}
+
+## Redundant plots
