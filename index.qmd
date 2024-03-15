@@ -156,6 +156,14 @@ Supporting the transcriptomic data, the activity of CYP3A4—measured through th
 
 ![Overall mean CYP3A4 activity relative to vehicle control after IL-1B treatment.](notebooks/LCMS/output/act-il1b.png){#fig-act-il1b}
 
+## mRNA sequencing
+
+We see that supraphysiological levels of IL-6 and IL-1β have a marked effect on the up- and downregulation of the expression of several genes. IL-6 at 10 ng/ml gives rise to an upregulation of \~500 genes, and a downregulation of \~400 genes, whereas IL-1B at the same concentration leads to an up and downregulation of \~650 and and \~550 genes respecitvely. Not surprinsingly, our gene set enrichment analysis revealed the most affected pathways to be related to inflammatory processes. We saw nearly no genes significantly up or downregulated at the lowest concentration of IL-6, which is in stark contrast to what is seen with IL-1B.
+
+![](images/main_seq_IL6.png)
+
+![](images/main_seq_IL1B.png)
+
 ## Discussion
 
 5 linjers summary
