@@ -661,21 +661,105 @@ cyp_overall_means <- cyp_means[, .(overall_mean_normalized_expression = mean(mea
 
 # 5. Plotting (This part remains the same, using ggplot2)
 ggplot() +
-  geom_point(data = cyp_means, aes(x = treatment, y = mean_normalized_expression, color = experiment), alpha = 0.5, size = 4) +
-  geom_point(data = cyp_overall_means, aes(x = treatment, y = overall_mean_normalized_expression),
-             color = "black", size = 8, shape = 18, alpha = 0.7) +
+  geom_point(data = cyp_means,
+             aes(x = treatment,
+                 y = mean_normalized_expression,
+                 fill = experiment
+                 ), 
+             shape = 21,
+             alpha = 0.7,
+             size = 5,
+             stroke = 1
+             ) +
+  scale_fill_brewer(palette = "Set2", labels = c("1", "2", "3")) +
+  geom_point(data = cyp_overall_means,
+             aes(x = treatment,
+                 y = overall_mean_normalized_expression
+                 ),
+             fill = "black",
+             color = "black",
+             size = 6,
+             shape = 9,
+             alpha = 0.7,
+             stroke = 1.5
+             ) +
   scale_y_continuous(limits = c(0, NA)) +
   facet_grid(condition ~ target, scales = "free_y") +
-  labs(x = "Treatment", y = "Mean Normalized Expression (Across Time Points)", title = "Normalized Expression after IL-6/IL-1β") + 
+  labs(x = "Treatment",
+       y = "Mean Normalized Expression (Across Time Points)",
+       title = "Normalized Expression after IL-6/IL-1β",
+       fill = "Donor") + 
   theme_bw() + 
-  theme(axis.text.x = element_text(angle = 30, hjust = 1),
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
         axis.title.y = element_text(vjust = 3, face = "bold"),
         axis.title.x = element_text(vjust = -1.5, face = "bold"),
         plot.title = element_text(face = "bold"),
-        legend.title = element_text(face = "bold")
-  ) 
+        legend.title = element_text(face = "bold"),
+        panel.grid.major.x = element_blank(),
+        legend.position = "bottom"
+  )
+
+# ggsave(filename = here("notebooks/qPCR/output/mrna-rest.png"), device = "png", dpi = "retina")
 ```
 
+```{r}
+plot_IL1B <-
+  ggplot(
+    data_IL1B,
+    aes(
+      x = conc,
+      y = time_means
+    )
+  ) +
+  ## First layer ##
+  geom_point(
+    aes(
+      fill = factor(time)
+    ),
+    size = 7,
+    shape = 21,  # Use a shape that is filled, 21 is filled
+    color = "black",
+    stroke = 1,
+    alpha = .7
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  ## Second layer ##
+  geom_point(
+    data = data_IL1B_means,
+    aes(
+      x = conc,
+      y = overall_mean
+    ),
+    size = 12, alpha = 0.80
+  ) +
+  ## Modifications ##
+  labs(
+    x = "Treatment",
+    y = "Expression relative to vehicle control",
+    fill = "Duration of treatment, hours:"
+  ) +
+  scale_y_continuous(limits = c(0, 1.25), n.breaks = 6) +
+  scale_x_log10(
+    name = "Concentration IL-1β (ng/ml)") +
+  annotation_logticks(sides = "b")  +
+  geom_hline(yintercept = 1, linetype = "dashed") +
+  theme_bw() +
+  theme(
+    #axis.text.x = element_text(angle = 30, hjust = 1),
+    axis.text = element_text(size = 12, face = "bold"),
+    axis.title.y = element_text(vjust = 3,
+                                face = "bold",
+                                size = 15,
+                                margin = margin(t = 0, r = 10, b = 0, l = 0)),
+    plot.margin = margin(t = 10, r = 10, b = 10, l = 30),
+    axis.title.x = element_text(vjust = -1.5, face = "bold", size = 15),
+    plot.title = element_text(face = "bold"),
+    #legend.title = element_text(face = "bold"),
+    legend.position = "bottom",
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
+  )
+```
 
 
 
