@@ -4,6 +4,8 @@ project:
     - "*.qmd"
     - "!notebooks/qPCR/old_qPCR_import/"
     - "!notebooks/seq/GSEA.qmd"
+    - "!notebooks/LCMS/"
+    
 
 execute:
   freeze: auto
