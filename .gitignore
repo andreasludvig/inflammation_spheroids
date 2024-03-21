@@ -27,3 +27,5 @@
 /notebooks/seq/data_raw/
 
 /revisions/
+
+/.venv/
