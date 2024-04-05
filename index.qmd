@@ -148,7 +148,7 @@ No negative effect of the treatments on viability or morphology was observed (ra
 
 ![Relative CYP3A4 mRNA expression. Small points are mean of three donors for 72 and 120 hours, and two donors for 24 hours (donors two and three)](notebooks/qPCR/output/mrna_3A4_main.png){#fig-mrna-3a4-main width="2000"}
 
-### Activity 
+### Activity
 
 Supporting the transcriptomic data, the activity of CYP3A4—measured through the formation of the OH-midazolam metabolite—showed a dose-dependent decrease. This observation underscores the 3D model's ability to more closely replicate in vivo conditions, highlighting its relevance for pharmacokinetic studies. Notably, the extent of activity suppression was not as pronounced as the downregulation observed at the mRNA level. This discrepancy may indicate the influence of post-transcriptional factors, which could modulate enzyme activity beyond the effects captured at the transcriptional stage. Factors such as protein stability, enzymatic degradation rates, or post-translational modifications might play significant roles in maintaining enzyme activity despite reduced mRNA levels (nonsense?). (highlighting the need to not only look at mRNA? Til discussion?, perspektiver I at kigge ind I disse modifikationer)
 
@@ -180,7 +180,7 @@ Secondly, the employment of a relatively novel cell model, utilizing primary hum
 
 Moreover, the application of 3D culture techniques in modeling hepatocyte function further strengthens our study. 3D cultures have been shown to more closely mimic the in vivo liver microenvironment, supporting the maintenance of hepatocyte phenotype and function over extended periods. This approach allows for a more nuanced exploration of drug metabolism and toxicity, potentially leading to more predictive and reliable assessments of pharmacokinetics and pharmacodynamics in humans.
 
-### **Comparisons** 
+### **Comparisons**
 
 sammenlign med tidligere studier: AC og og errkas review plus karolinska
 
@@ -188,14 +188,14 @@ sammenlign med tidligere studier: AC og og errkas review plus karolinska
 
 Incorporating the advancements in 3D primary human hepatocyte cultures into PBPK modeling might lead towards more accurate and reliable predictions of drug behavior in the human body. This integration has the potential to streamline pharmaceutical development processes, offering a dual benefit: reducing development costs and minimizing unnecessary exposure of study participants to experimental drugs. By more accurately simulating human liver physiology, these advanced models can improve the predictive power of PBPK simulations, thus optimizing drug development strategies and safeguarding participant well-being.
 
-## **Conclusion ** 
+## **Conclusion** 
 
 ## References
 
 ::: {#refs}
 :::
 
-## Supplementary material 
+## Supplementary material
 
 ![Normalized expression, mean across all time points](notebooks/qPCR/output/mrna-rest.png){#fig-mrna-rest}
 

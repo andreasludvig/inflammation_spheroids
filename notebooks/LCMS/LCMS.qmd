@@ -11,10 +11,12 @@ library(here)
 library(RColorBrewer)
 ```
 
-
 ## Donor 3, AS0013B, Midazolam
+
 ### Peak status'
+
 Check peak status' for any amounts below what below/above the limit of our standard curve.
+
 ```{r}
 # Load data
 donor_3_peak_status <- 
@@ -22,10 +24,11 @@ donor_3_peak_status <-
 
 donor_3_peak_status
 ```
+
 **Should this be omitted? It is below the lowest point on our standard curve, but omitting it would make the mean higher, than it really is? For now it is included in calculated means.**
 
-
 ### **Plots**
+
 ```{r}
 # Load processed data
 donor_3_data <- 
@@ -51,6 +54,7 @@ group_IL1B <- c(#"control",
 ```
 
 IL-6 effect on CYP3A4
+
 ```{r}
 #| label: fig-act_3A4_IL_6_AS0013
 #| fig-cap: "Donor 3: Activity, IL-6"
@@ -109,6 +113,7 @@ act_3A4_IL_6_AS0013
 ```
 
 IL-1B effect on CYP3A4
+
 ```{r}
 #| label: fig-act_3A4_IL_1B_AS0013
 #| fig-cap: "Donor 3: Activity, IL-1B"
@@ -165,8 +170,9 @@ act_3A4_IL_1B_AS0013
 ```
 
 ## Donor 2, AS0008, midazolam
-Load data
-Check peak status' for any amounts below what below/above the limit of our standard curve.
+
+Load data Check peak status' for any amounts below what below/above the limit of our standard curve.
+
 ```{r}
 donor_2_peak_status <- 
   readRDS(here("notebooks/LCMS/data_processed/AS0008_peak_status.rds"))
@@ -174,11 +180,11 @@ donor_2_peak_status <-
 # Check peak status'
 donor_2_peak_status |> knitr::kable()
 ```
-Samples 52, 153, 162, 163, 172, and 173 had no baselcocktail added to there wells, and that is why there is no peaks. Sample 171 did not have a spheroid in the well. These samples are removed from the datatable before calculating means. However, there are two samples left with "response low", which are included in calculating means. 
 
-
+Samples 52, 153, 162, 163, 172, and 173 had no baselcocktail added to there wells, and that is why there is no peaks. Sample 171 did not have a spheroid in the well. These samples are removed from the datatable before calculating means. However, there are two samples left with "response low", which are included in calculating means.
 
 ### **Plots**
+
 ```{r}
 # Load processed data
 donor_2_data <- 
@@ -204,6 +210,7 @@ group_IL1B <- c(#"control",
 ```
 
 IL-6 effect on CYP3A4
+
 ```{r}
 #| label: fig-act_3A4_IL_6_AS0008
 #| fig-cap: "Donor 2: Activity, IL-6"
@@ -262,6 +269,7 @@ act_3A4_IL_6_AS0008
 ```
 
 IL-1B effect on CYP3A4
+
 ```{r}
 #| label: fig-act_3A4_IL_1B_AS0008
 #| fig-cap: "Donor 2: Activity, IL-1B"
@@ -317,7 +325,6 @@ act_3A4_IL_1B_AS0008
 #   )
 ```
 
-
 ## Main plots
 
 load data
@@ -345,9 +352,10 @@ group_IL1B <- c(#"control",
                 )
 ```
 
+### Facetted on time
 
-### Facetted on time 
 IL-6
+
 ```{r}
 #| label: fig-act-cyp3A4-IL6
 #| fig-cap: "Mean CYP3A4 activity relative to vehicle control after IL-6 treatment. Facetted on time. 24 hour timepoints removed"
@@ -391,10 +399,11 @@ act_3A4_IL6 <- ggplot(data = plot_data_IL6) +
 
 act_3A4_IL6
 ```
+
 CONSIDER REMOVING THE OUTLIER IN 120 hour IL-6 and IL1B. See the individual plots above.
 
-
 IL-1B
+
 ```{r}
 #| label: fig-act-cyp3A4-IL1B
 #| fig-cap: "Mean CYP3A4 activity relative to vehicle control after IL-1B treatment. Facetted on time. 24 hour timepoints removed"
@@ -440,7 +449,9 @@ act_3A4_IL1B
 ```
 
 ### Timepoints combined
+
 IL-6
+
 ```{r}
 #| label: fig-act-il6-combined
 #| fig-cap: "Overall mean CYP3A4 activity relative to vehicle control after IL-6 treatment. 24 hour timepoints removed"
@@ -491,8 +502,8 @@ ggplot(data = IL6_combined_data) +
 # ggsave(filename = here("notebooks/LCMS/output/act-il6.png"), device = "png", dpi = "retina")
 ```
 
-
 IL-1B
+
 ```{r}
 #| label: fig-act-il1b-combined
 #| fig-cap: "Overall mean CYP3A4 activity relative to vehicle control after IL-1B treatment. 24 hour timepoints removed"
@@ -546,10 +557,7 @@ ggplot(data = IL1B_combined_data) +
 # ggsave(filename = here("notebooks/LCMS/output/act-il1b.png"), device = "png", dpi = "retina")
 ```
 
-
-
 ## EC50
-
 
 ```{r}
 EC50_data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
@@ -579,23 +587,20 @@ EC50_IL6 <- EC50_data[treatment %in% group_IL6]
 #fwrite(EC50_IL6, file = here("notebooks/LCMS/EC50_IL6.csv"))
 ```
 
-
-
-
 ```{r}
 library(tidyverse)
 library(minpack.lm)
 ```
 
 ```{r}
-EC50_IL6 <- EC50_IL6 %>%
-  mutate(Concentration = case_when(
-    treatment == "control" ~ 0, # Assign 0 to control
-    TRUE ~ as.numeric(gsub(".*?(\\d+\\.?\\d*).*", "\\1", treatment)) # Extract numeric values
-  ))
+# EC50_IL6 <- EC50_IL6 %>%
+#   mutate(Concentration = case_when(
+#     treatment == "control" ~ 0, # Assign 0 to control
+#     TRUE ~ as.numeric(gsub(".*?(\\d+\\.?\\d*).*", "\\1", treatment)) # Extract numeric values
+#   ))
 
-# Check for NAs in Concentration to ensure parsing was successful
-sum(is.na(EC50_IL6$Concentration))
+# # Check for NAs in Concentration to ensure parsing was successful
+# sum(is.na(EC50_IL6$Concentration))
 
 ```
 
@@ -607,7 +612,85 @@ fourPL <- function(x, Top, Bottom, IC50, HillSlope) {
 }
 
 # Ensure EC50_IL6 is filtered and contains no NA values for the fitting
-EC50_IL6_filtered <- EC50_IL6 %>% filter(!is.na(Concentration) & Concentration > 0 & !is.na(relative_amount))
+EC50_IL6_filtered <- EC50_IL6 %>% filter(!is.na(concentration) & concentration > 0 & !is.na(relative_amount))
+EC50_IL6_filtered <- EC50_IL6_filtered %>% filter(time_treatment != 24)
+
+# Adjust initial parameter estimates
+Top_est <- max(EC50_IL6_filtered$relative_amount, na.rm = TRUE)
+Bottom_est <- min(EC50_IL6_filtered$relative_amount, na.rm = TRUE)
+IC50_est <- median(EC50_IL6_filtered$concentration, na.rm = TRUE) # Assuming this is a reasonable estimate
+HillSlope_est <- 1 # Starting with a neutral slope
+
+# Fit the model with adjusted initial estimates
+model <- tryCatch({
+  nlsLM(relative_amount ~ fourPL(concentration, Top, Bottom, IC50, HillSlope), 
+        data = EC50_IL6_filtered, 
+        start = list(Top = Top_est, Bottom = Bottom_est, IC50 = IC50_est, HillSlope = HillSlope_est))
+}, error = function(e) e)
+
+# Check if model fitting was successful
+if(inherits(model, "error")) {
+  print("Model fitting encountered an error:")
+  print(model$message)
+} else {
+  print("Model fitted successfully.")
+}
+
+```
+
+```{r}
+#| label: fig-dose-response-act-il6
+
+
+# Generate predictions from the model across a range of concentrations
+new_data <- data.frame(concentration = seq(min(EC50_IL6_filtered$concentration, na.rm = TRUE), 
+                                           max(EC50_IL6_filtered$concentration, na.rm = TRUE), length.out = 1000))
+new_data$Predicted <- predict(model, newdata = new_data)
+
+# Plot the dose-response curve
+ggplot() +
+  geom_point(data = EC50_IL6_filtered, aes(x = concentration, y = relative_amount), color = "blue") +
+  geom_line(data = new_data, aes(x = concentration, y = Predicted), color = "red") +
+  labs(title = "Dose-response curve", x = "Concentration", y = "Relative Activity") +
+  theme_minimal() +
+  scale_x_log10()
+```
+
+```{r}
+# Print the summary of the fitted model to see parameter estimates
+summary(model)
+```
+
+## effin around
+
+```{r}
+library(tidyverse)
+library(minpack.lm)
+```
+
+```{r}
+# EC50_IL6 <- EC50_data[treatment %in% group_IL6]
+
+# EC50_IL6 <- EC50_IL6 %>%
+#   mutate(Concentration = case_when(
+#     treatment == "control" ~ 0, # Assign 0 to control
+#     TRUE ~ as.numeric(gsub(".*?(\\d+\\.?\\d*).*", "\\1", treatment)) # Extract numeric values
+#   ))
+
+# # Check for NAs in Concentration to ensure parsing was successful
+# sum(is.na(EC50_IL6$Concentration))
+
+```
+
+```{r}
+
+# The 4-parameter logistic model function remains the same
+fourPL <- function(x, Top, Bottom, IC50, HillSlope) {
+  Bottom + (Top - Bottom) / (1 + (x / IC50)^(-HillSlope))
+}
+
+# Ensure EC50_IL6 is filtered and contains no NA values for the fitting
+ic50_il6_data_filtered <- EC50_IL6 %>% filter(!is.na(Concentration) & Concentration > 0 & !is.na(relative_amount))
 
 # Adjust initial parameter estimates
 Top_est <- max(EC50_IL6_filtered$relative_amount, na.rm = TRUE)
@@ -638,7 +721,7 @@ if(inherits(model, "error")) {
 
 # Generate predictions from the model across a range of concentrations
 new_data <- data.frame(Concentration = seq(min(EC50_IL6_filtered$Concentration, na.rm = TRUE), 
-                                           max(EC50_IL6_filtered$Concentration, na.rm = TRUE), length.out = 100))
+                                           max(EC50_IL6_filtered$Concentration, na.rm = TRUE), length.out = 1000))
 new_data$Predicted <- predict(model, newdata = new_data)
 
 # Plot the dose-response curve
@@ -650,12 +733,7 @@ ggplot() +
   scale_x_log10()
 ```
 
-
-
 ```{r}
 # Print the summary of the fitted model to see parameter estimates
 summary(model)
 ```
-
-
-

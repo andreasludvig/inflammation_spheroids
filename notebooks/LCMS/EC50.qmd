@@ -1,0 +1,196 @@
+---
+title: EC50 for activity data
+---
+
+```{r}
+library(here)
+library(data.table)
+library(ggplot2)
+
+```
+
+```{r}
+EC50_data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
+str(EC50_data)
+```
+
+```{r}
+names(EC50_data)
+EC50_data  <- EC50_data[, .(treatment, treatment_group, time_treatment, time_incubation, concentration, rep, amount, mean_amount, relative_amount, mean_relative_amount)]
+
+EC50_data
+```
+
+```{r}
+EC50_IL6 <- EC50_data[treatment_group %chin% c("IL-6", "control")]
+
+plot(log10((EC50_IL6$concentration)), EC50_IL6$relative_amount)
+plot(log10((EC50_IL6$concentration)), EC50_IL6$mean_relative_amount)
+
+EC50_overall_mean <- EC50_IL6[, .(overall_mean_relative_amount = mean(mean_relative_amount)), by = .(concentration)]
+plot(log10((EC50_overall_mean$concentration)), EC50_overall_mean$overall_mean_relative_amount)
+```
+
+```{r}
+```
+
+```{r}
+```
+
+### Chatgpt
+
+```{r}
+# Load necessary libraries
+library(tidyverse)  # For data manipulation and visualization
+library(data.table) # For data manipulation
+library(drc)        # For dose-response curve analysis
+library(here)
+
+# Load the dataset
+ic50_data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
+
+# Inspect the data structure
+glimpse(ic50_data)
+
+# Drop unnecessary columns
+ic50_data  <- ic50_data[, .(treatment, treatment_group, time_treatment, time_incubation, donor, rep, concentration, amount, mean_amount, control_mean, relative_amount, mean_relative_amount)] 
+
+# Filter for IL-6 treated groups and controls at 0.5 hours incubation time
+ic50_il6_data <- ic50_data[treatment_group %chin% c("IL-6", "control") & time_incubation == 0.5]
+ic50_il6_data <- ic50_il6_data[time_treatment != 24]
+
+# Inspect the data structure:
+glimpse(ic50_il6_data)
+head(ic50_il6_data, 20)
+```
+
+```{r}
+# Summary statistics for IL-6 treated groups at 0.5 hours incubation time
+summary_stats <- ic50_il6_data %>%
+  group_by(treatment, concentration) %>%
+  summarise(
+    count = n(),
+    mean = mean(mean_relative_amount, na.rm = TRUE),
+    sd = sd(mean_relative_amount, na.rm = TRUE),
+    median = median(mean_relative_amount, na.rm = TRUE),
+    iqr = IQR(mean_relative_amount, na.rm = TRUE),
+    min = min(mean_relative_amount, na.rm = TRUE),
+    max = max(mean_relative_amount, na.rm = TRUE)
+  )
+
+# Print summary statistics
+print(summary_stats)
+
+```
+
+```{r}
+# Boxplot to compare distributions of mean_relative_amount across concentrations
+ggplot(ic50_il6_data, aes(x=factor(concentration), y=mean_relative_amount, fill=treatment_group)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of Mean Relative Amounts for Different Concentrations",
+       x = "Concentration",
+       y = "Mean Relative Amount") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set1")
+```
+
+```{r}
+# Scatter plot to visualize the dose-response relationship
+ggplot(ic50_il6_data, aes(x=concentration, y=mean_relative_amount, color=time_treatment)) +
+  geom_point() +
+  geom_smooth(method="lm", se=FALSE) +
+  scale_x_log10() +
+  labs(title = "Scatter Plot of Mean Relative Amounts with Trend Line",
+       x = "Concentration (log scale)",
+       y = "Mean Relative Amount") +
+  theme_minimal() +
+  scale_color_brewer(palette = "Set1")
+```
+
+
+Using DRC package to fit a dose-response model and calculate the IC50 value
+```{r}
+# Assuming ic50_il6_data is already filtered for the 0.5 hours incubation time
+# and only contains data for the IL-6 and control groups
+overall_mean <- ic50_il6_data[, .(overall_mean = mean(mean_relative_amount, na.rm = TRUE), concentration), by = .(treatment, concentration)]
+
+# Fit the dose-response model (we'll use a 4-parameter log-logistic model)
+dose_response_model <- drm(overall_mean ~ concentration, data=overall_mean, fct=""))
+
+# Check model fit
+summary(dose_response_model)
+
+# Plot the fitted curve
+plot(dose_response_model, type = "all", log = "x", 
+     xlab = "Concentration of IL-6 (log scale)",
+     ylab = "Mean Relative Amount")
+
+# Calculate the IC50 value
+ic50_value <- ED(dose_response_model, 50, interval="delta")
+
+# Print the IC50 value
+print(ic50_value)
+```
+
+
+Using minpack
+
+```{r}
+library(minpack.lm)
+
+# The 4-parameter logistic model function remains the same
+fourPL <- function(x, Top, Bottom, IC50, HillSlope) {
+  Bottom + (Top - Bottom) / (1 + (x / IC50)^(-HillSlope))
+}
+
+# Ensure EC50_IL6 is filtered and contains no NA values for the fitting
+ic50_il6_data_filtered <- ic50_il6_data %>% filter(time_treatment != 24)
+
+# Adjust initial parameter estimates
+Top_est <- max(ic50_il6_data_filtered$relative_amount, na.rm = TRUE)
+Bottom_est <- min(ic50_il6_data_filtered$relative_amount, na.rm = TRUE)
+IC50_est <- median(ic50_il6_data_filtered$concentration, na.rm = TRUE) # Assuming this is a reasonable estimate
+HillSlope_est <- 1 # Starting with a neutral slope
+
+# Fit the model with adjusted initial estimates
+model <- tryCatch({
+  nlsLM(relative_amount ~ fourPL(concentration, Top, Bottom, IC50, HillSlope), 
+        data = ic50_il6_data_filtered, 
+        start = list(Top = Top_est, Bottom = Bottom_est, IC50 = IC50_est, HillSlope = HillSlope_est))
+}, error = function(e) e)
+
+# Check if model fitting was successful
+if(inherits(model, "error")) {
+  print("Model fitting encountered an error:")
+  print(model$message)
+} else {
+  print("Model fitted successfully.")
+}
+
+
+```
+
+
+```{r}
+
+# Generate predictions from the model across a range of concentrations
+new_data <- data.frame(concentration = seq(min(ic50_il6_data_filtered$concentration, na.rm = TRUE), 
+                                           max(ic50_il6_data_filtered$concentration, na.rm = TRUE), length.out = 1000))
+new_data$Predicted <- predict(model, newdata = new_data)
+
+# Plot the dose-response curve
+ggplot() +
+  geom_point(data = ic50_il6_data_filtered, aes(x = concentration, y = relative_amount), color = "blue") +
+  geom_line(data = new_data, aes(x = concentration, y = Predicted), color = "red") +
+  labs(title = "Dose-response curve", x = "Concentration", y = "Relative Activity") +
+  theme_minimal() +
+  scale_x_log10()
+```
+
+
+```{r}
+# Print the summary of the fitted model to see parameter estimates
+summary(model)
+```
+
+####

@@ -2,6 +2,7 @@
 # install.packages("drc") # Uncomment if not already installed
 library(drc)
 
+
 # Mock data
 doses <- c(0.1, 0.2, 0.5, 1.0, 2.0, 5.0)
 responses <- c(5, 10, 20, 50, 60, 70)
@@ -30,7 +31,7 @@ data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
 data <- data[treatment_group %chin% c("IL-6", "control") & time_incubation == 0.5]
 
 # Remove the 24-hour treatment duration data points
-data[time_treatment != 24]
+data <- data[time_treatment != 24]
 
 # Calculate the mean relative amount for each IL-6 concentration
 data_means <- aggregate(mean_relative_amount ~ concentration, data = data, FUN = mean)
@@ -51,4 +52,60 @@ summary(ec50)
 ec50_value <- coef(ec50)[1]
 
 
+
+## Not using means:
+# Get the final data
+data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
+
+# Subset data for just IL-6 and 0.5 hours incubation. 
+data <- data[treatment_group %chin% c("IL-6", "control") & time_incubation == 0.5]
+
+# Remove the 24-hour treatment duration data points
+data <- data[time_treatment != 24]
+data <- data[, .(donor, treatment, time_treatment, time_incubation, relative_amount, concentration)]
+data
+
+# Fit the dose-response model using the mean relative amounts
+model <- drm(relative_amount ~ concentration, data = data, fct = LL.4())
+
+# Plot the dose-response curve
+plot(model, type = "all")
+
+# Calculate EC50 from the model
+ec50 <- ED(model, 50, interval = "delta")
+
+# Get a summary which includes the EC50 value and its confidence interval
+summary(ec50)
+
+# If you want to extract just the EC50 value
+ec50_value <- coef(ec50)[1]
+
+
+## remove some outliers:
+## Not using means:
+# Get the final data
+data <- readRDS(here("notebooks/LCMS/data_processed/final_data.rds"))
+
+# Subset data for just IL-6 and 0.5 hours incubation. 
+data <- data[treatment_group %chin% c("IL-6", "control") & time_incubation == 0.5]
+
+# Remove the 24-hour treatment duration data points
+#data[time_treatment != 24]
+data <- data[, .(donor, treatment, time_treatment, time_incubation, relative_amount, concentration)]
+data <- data[]
+# 
+# Fit the dose-response model using the mean relative amounts
+model <- drm(relative_amount ~ concentration, data = data, fct = LL.4())
+
+# Plot the dose-response curve
+plot(model, type = "all")
+
+# Calculate EC50 from the model
+ec50 <- ED(model, 50, interval = "delta")
+
+# Get a summary which includes the EC50 value and its confidence interval
+summary(ec50)
+
+# If you want to extract just the EC50 value
+ec50_value <- coef(ec50)[1]
 
